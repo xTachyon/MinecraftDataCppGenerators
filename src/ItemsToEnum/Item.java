@@ -1,6 +1,7 @@
 package ItemsToEnum;
 
 import Utils.Utils;
+import org.apache.commons.lang3.text.WordUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -19,7 +20,7 @@ public class Item {
     public Item() {}
 
     public String formatItemName() {
-        return Utils.toTitleCase(name);
+        return WordUtils.capitalize(name, " _".toCharArray()).replace("_", "");
     }
 
     public static Item parse(JSONObject json) {

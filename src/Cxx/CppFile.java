@@ -1,6 +1,9 @@
-package Utils;
+package Cxx;
 
-import java.util.List;
+
+import Utils.Indent;
+import Utils.Pair;
+import Utils.Utils;
 
 public class CppFile {
     private StringBuilder str;
@@ -26,6 +29,27 @@ public class CppFile {
     public void writeGuardEnd() {
         str.append("#endif // ");
         str.append(macro);
+    }
+
+    public void writeInclude(String name, IncludeFileType type) {
+        str.append("#include ");
+
+        switch (type) {
+
+            case Standard: {
+                str.append('<').append(name).append(">\n");
+            }
+                break;
+
+            case Regular: {
+                str.append('\"').append(name).append("\"\n");
+            }
+                break;
+        }
+    }
+
+    public void writeNewline() {
+        str.append('\n');
     }
 
     public void writeNamespaceBegin(String namespace) {

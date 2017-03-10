@@ -1,7 +1,8 @@
 package ItemsToEnum;
 
 
-import Utils.CppFile;
+import Cxx.CppFile;
+import Cxx.IncludeFileType;
 import Utils.Pair;
 import org.json.JSONObject;
 
@@ -49,6 +50,8 @@ public class ItemsToEnumGenerator {
         header = new CppFile(str, namespaces, "Items");
 
         header.writeGuardBegin();
+        header.writeInclude("cstdint", IncludeFileType.Standard);
+        header.writeNewline();
         header.writeNamespacesBegin();
 
         Pair<String, String>[] pairs = new Pair[items.length];
