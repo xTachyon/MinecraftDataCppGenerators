@@ -3,6 +3,7 @@ package ItemsToEnum;
 
 import Cxx.CppFile;
 import Cxx.IncludeFileType;
+import Cxx.Type;
 import Utils.Pair;
 import org.json.JSONObject;
 
@@ -53,17 +54,13 @@ public class ItemsToEnumGenerator {
         header.writeInclude("cstdint", IncludeFileType.Standard);
         header.writeNewline();
         header.writeNamespacesBegin();
+        header.writeStructBegin("ItemTypeEnum");
 
-        Pair<String, String>[] pairs = new Pair[items.length];
-        int i = 0;
-        for (Item item : items) {
-            pairs[i] = new Pair<String, String>(item.writename, String.valueOf(item.id));
-
-            ++i;
+        for ( Item i : items) {
+            header.writeStaticConstexpr(Type.Int, i.writename, String.valueOf(i.id));
         }
 
-        header.writeEnum("Items", "std::uint32_t", pairs);
-
+        header.writeStructEnd();
         header.writeNamespacesEnd();
         header.writeGuardEnd();
     }

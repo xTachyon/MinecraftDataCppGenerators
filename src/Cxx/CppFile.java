@@ -109,4 +109,22 @@ public class CppFile {
     public void writeIndent() {
         indent.write();
     }
+
+    public void writeStructBegin(String structname) {
+        indent.write();;
+        str.append("struct ").append(structname).append("\n{\n");
+        indent.begin();
+    }
+
+    public void writeStructEnd() {
+        indent.end();;
+        str.append("};");
+    }
+
+    public void writeStaticConstexpr(Type type, String name, String value) {
+        indent.write();
+        str.append("static constexpr ").append(type.toString()).append(' ')
+                .append(name).append(" = ").append(value).append(';');
+        str.append('\n');
+    }
 }
