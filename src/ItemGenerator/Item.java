@@ -1,6 +1,5 @@
-package ItemsToEnum;
+package ItemGenerator;
 
-import Utils.Utils;
 import org.apache.commons.lang3.text.WordUtils;
 import org.json.JSONException;
 import org.json.JSONObject;

@@ -18,6 +18,14 @@ public class CppFile {
         indent = new Indent(str, 2);
     }
 
+    public StringBuilder getString() {
+        return str;
+    }
+
+    public Indent getIndent() {
+        return indent;
+    }
+
     public void writeGuardBegin() {
         str.append("#ifndef ");
         str.append(macro);

@@ -1,23 +1,24 @@
-package ItemsToEnum;
+package ItemGenerator;
 
 
 import Cxx.CppFile;
 import Cxx.IncludeFileType;
 import Cxx.Type;
-import Utils.Pair;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemsToEnumGenerator {
+public class EnumItemTypeGenerator {
     private JSONObject json;
     private String[] namespaces;
     private Item[] items;
     private StringBuilder str;
     private CppFile header;
 
-    public ItemsToEnumGenerator(JSONObject json, String[] namespaces) {
+
+
+    public EnumItemTypeGenerator(JSONObject json, String[] namespaces) {
         this.json = json;
         this.namespaces = namespaces;
     }
@@ -54,14 +55,22 @@ public class ItemsToEnumGenerator {
         header.writeInclude("cstdint", IncludeFileType.Standard);
         header.writeNewline();
         header.writeNamespacesBegin();
+
+        generateEnum();
+        header.writeNewline();
+        header.writeNewline();
+
+        header.writeNamespacesEnd();
+        header.writeGuardEnd();
+    }
+
+    private void generateEnum() {
         header.writeStructBegin("ItemTypeEnum");
 
-        for ( Item i : items) {
+        for (Item i : items) {
             header.writeStaticConstexpr(Type.Int, i.writename, String.valueOf(i.id));
         }
 
         header.writeStructEnd();
-        header.writeNamespacesEnd();
-        header.writeGuardEnd();
     }
 }

@@ -1,10 +1,8 @@
 package Main;
 
-import ItemsToEnum.ItemsToEnumGenerator;
-import Utils.MutableInt;
+import ItemGenerator.EnumItemTypeGenerator;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
@@ -19,7 +17,7 @@ public class Main {
             String[] namespaces = new String[1];
             namespaces[0] = "redi";
 
-            ItemsToEnumGenerator gen = new ItemsToEnumGenerator(json, namespaces);
+            EnumItemTypeGenerator gen = new EnumItemTypeGenerator(json, namespaces);
             gen.generate();
             String result = gen.getResult();
 
@@ -33,3 +31,4 @@ public class Main {
     }
 }
 // /home/andrei/repositories/minecraft-data/data/pc/1.11/items.json
+// E:\Info\repos\minecraft-data\data\pc\1.11\items.json
