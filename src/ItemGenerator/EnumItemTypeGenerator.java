@@ -10,41 +10,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EnumItemTypeGenerator {
-    private JSONObject json;
     private String[] namespaces;
     private Item[] items;
     private StringBuilder str;
     private CppFile header;
 
-
-
-    public EnumItemTypeGenerator(JSONObject json, String[] namespaces) {
-        this.json = json;
+    public EnumItemTypeGenerator(String[] namespaces) {
         this.namespaces = namespaces;
     }
 
-    public void generate() {
-        generateList();
+    public void generate(JSONObject json) {
+        items  = Item.parseItems(json);
         generateString();
     }
 
     public String getResult() {
         return str.toString();
-    }
-
-    private void generateList() {
-        List<Item> items = new ArrayList<>();
-
-        for (Object i : json.getJSONArray("content")){
-            JSONObject obj = (JSONObject)i;
-
-            Item item = Item.parse(obj);
-            if (item != null) {
-                items.add(item);
-            }
-        }
-
-        this.items = items.toArray(new Item[items.size()]);
     }
 
     private void generateString() {
@@ -57,8 +38,6 @@ public class EnumItemTypeGenerator {
         header.writeNamespacesBegin();
 
         generateEnum();
-        header.writeNewline();
-        header.writeNewline();
 
         header.writeNamespacesEnd();
         header.writeGuardEnd();

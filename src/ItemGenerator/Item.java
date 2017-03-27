@@ -1,11 +1,15 @@
 package ItemGenerator;
 
+import Cxx.IConstChar;
 import org.apache.commons.lang3.text.WordUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Item {
-    private static final String idKey= "id";
+import java.util.ArrayList;
+import java.util.List;
+
+public class Item implements IConstChar {
+    private static final String idKey = "id";
     private static final String displaynameKey = "displayName";
     private static final String stacksizeKey= "stackSize";
     private static final String nameKey = "name";
@@ -38,5 +42,30 @@ public class Item {
         }
 
         return item;
+    }
+
+    public static Item[] parseItems(JSONObject json) {
+        List<Item> items = new ArrayList<>();
+
+        for (Object i : json.getJSONArray("content")){
+            JSONObject obj = (JSONObject)i;
+
+            Item item = Item.parse(obj);
+            if (item != null) {
+                items.add(item);
+            }
+        }
+
+        return items.toArray(new Item[items.size()]);
+    }
+
+    @Override
+    public int getConstCharID() {
+        return id;
+    }
+
+    @Override
+    public String getConstCharValue() {
+        return displayname;
     }
 }

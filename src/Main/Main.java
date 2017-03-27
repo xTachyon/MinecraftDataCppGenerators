@@ -13,17 +13,8 @@ public class Main {
         String s = scanner.next();
 
         try {
-            JSONObject json = Utils.JSONRead.readFrom(s);
-            String[] namespaces = new String[1];
-            namespaces[0] = "redi";
-
-            EnumItemTypeGenerator gen = new EnumItemTypeGenerator(json, namespaces);
-            gen.generate();
-            String result = gen.getResult();
-
-            PrintWriter writer = new PrintWriter("Items.hpp");
-            writer.write(result);
-            writer.close();
+            GenerateEverything g = new GenerateEverything(s, "result");
+            g.generate();
         }
         catch (Exception e) {
             System.out.println(e);
@@ -32,3 +23,4 @@ public class Main {
 }
 // /home/andrei/repositories/minecraft-data/data/pc/1.11/items.json
 // E:\Info\repos\minecraft-data\data\pc\1.11\items.json
+// E:\Info\repos\minecraft-data\data\pc\1.11\
