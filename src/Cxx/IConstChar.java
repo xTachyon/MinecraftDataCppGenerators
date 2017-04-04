@@ -1,6 +1,6 @@
 package Cxx;
 
 public interface IConstChar {
-    int getConstCharID();
-    String getConstCharValue();
+    int getConstCharID(Object o);
+    String getConstCharValue(Object o);
 }

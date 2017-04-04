@@ -8,7 +8,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Item implements IConstChar {
+public class Item {
     private static final String idKey = "id";
     private static final String displaynameKey = "displayName";
     private static final String stacksizeKey= "stackSize";
@@ -35,16 +35,15 @@ public class Item implements IConstChar {
             item.stacksize = json.getInt(stacksizeKey);
             item.name = json.getString(nameKey);
             item.writename = item.formatItemName();
-        }
-        catch (JSONException e) {
-            System.out.println(e);
+        } catch (JSONException e) {
+            System.out.println(e.toString());
             return null;
         }
 
         return item;
     }
 
-    public static Item[] parseItems(JSONObject json) {
+    public static List<Item> parseItems(JSONObject json) {
         List<Item> items = new ArrayList<>();
 
         for (Object i : json.getJSONArray("content")){
@@ -56,16 +55,6 @@ public class Item implements IConstChar {
             }
         }
 
-        return items.toArray(new Item[items.size()]);
-    }
-
-    @Override
-    public int getConstCharID() {
-        return id;
-    }
-
-    @Override
-    public String getConstCharValue() {
-        return displayname;
+        return items;
     }
 }

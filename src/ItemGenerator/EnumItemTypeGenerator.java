@@ -11,7 +11,7 @@ import java.util.List;
 
 public class EnumItemTypeGenerator {
     private String[] namespaces;
-    private Item[] items;
+    private List<Item> items;
     private StringBuilder str;
     private CppFile header;
 

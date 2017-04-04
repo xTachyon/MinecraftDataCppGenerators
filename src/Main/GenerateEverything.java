@@ -1,7 +1,9 @@
 package Main;
 
 
+import ItemGenerator.Block;
 import ItemGenerator.EnumItemTypeGenerator;
+import ItemGenerator.Item;
 import ItemGenerator.MethodsGenerator;
 import Utils.JSONRead;
 import org.json.JSONObject;
@@ -9,6 +11,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 public class GenerateEverything {
     private String in;
@@ -30,6 +33,8 @@ public class GenerateEverything {
 
     private void generateItems() throws IOException {
         JSONObject json = JSONRead.readFrom(in + "/items.json");
+        List<Item> items = Item.parseItems(JSONRead.readFrom(in + "/items.json"));
+        List<Block> blocks = Block.parseBlocks(JSONRead.readFrom(in + "/blocks.json"));
 
         EnumItemTypeGenerator gen = new EnumItemTypeGenerator(namespaces);
         gen.generate(json);
@@ -40,7 +45,8 @@ public class GenerateEverything {
         writer.close();
 
 
-        MethodsGenerator mg = new MethodsGenerator();
+        MethodsGenerator mg = new MethodsGenerator(out);
+        mg.generate(items, blocks);
     }
 
     private void createDirectory() {

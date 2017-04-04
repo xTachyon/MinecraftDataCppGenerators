@@ -6,6 +6,7 @@ import Utils.MutableInt;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 public class ConstCharGen {
     private String filename;
@@ -19,8 +20,8 @@ public class ConstCharGen {
         map = new HashMap<>();
     }
 
-    public void generate(Iterable<IConstChar> list) {
-        generateMap(list);
+    public <T> void generate(Iterable<T> list, IConstChar f) {
+        generateMap(list, f);
         generateString();
     }
 
@@ -33,24 +34,27 @@ public class ConstCharGen {
         }
     }
 
-    public void generateAndWrite(Iterable<IConstChar> list) {
-        generate(list);
+    public <T> void generateAndWrite(Iterable<T> list, IConstChar f) {
+        generate(list, f);
         write();
     }
 
-    private void generateMap(Iterable<IConstChar> list) {
-        for (IConstChar i : list) {
-            map.put(i.getConstCharID(), i.getConstCharValue());
-            max = Math.max(max, i.getConstCharID());
+    public  <T> void generateMap(Iterable<T> list, IConstChar f) {
+        for (T i : list) {
+            int id = f.getConstCharID(i);
+
+            map.put(id, f.getConstCharValue(i));
+            max = Math.max(max, id);
         }
+
     }
 
-    private void generateString() {
+    public void generateString() {
         str.append("const char* names[] = {\n");
         String padding = new String(new char[6]).replace('\0', ' ');
 
         for (int i = 0; i <= max; ++i) {
-            str.append(padding).append("\"").append(map.getOrDefault(i, "UNKNOWN")).append("\"\n");
+            str.append(padding).append("\"").append(map.getOrDefault(i, "UNKNOWN")).append("\",\n");
         }
 
         str.append(padding).append("};");
